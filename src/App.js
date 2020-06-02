@@ -1,13 +1,32 @@
 import React, { useState } from 'react';
 import './App.css';
 
+function LikesCounter(props) {
+  const [likes, setLikes] = useState(props.likes);
+
+  function incrementLikes() {
+    let likesCount = likes + 1;
+
+    setLikes(likesCount);
+  }
+
+  return (
+    <div>
+      <p className="mt-0">{likes} Likes</p>
+      <a href="#" onClick={incrementLikes}>
+        Like this post
+      </a>
+    </div>
+  )
+}
+
 function PostsList(props) {
   const posts = props.data;
 
   const list = posts.map(post => 
     <div className="post">
       <h3 className="mb-0">{post.title}</h3>
-      <p className="mt-0">{post.likes} Likes</p>
+      <LikesCounter likes={post.likes} />
     </div>
   );
 
@@ -19,6 +38,9 @@ function PostsList(props) {
 }
 
 function Feed() {
+  // Fetches the data dynamically 
+  // Usually useState and useEffect hooks are used
+
   const data = [{
     "id": 1,
     "title": "My first post",
@@ -50,7 +72,7 @@ function Title() {
 
 function Footer() {
   return (
-    <small>Thank You!</small>
+    <small>Thank You! I am a footer component.</small>
   )
 }
 
