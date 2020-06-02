@@ -1,12 +1,28 @@
 import React, { useState } from 'react';
 import './App.css';
 
+function Comments(props) {
+  const comments = props.comments;
+
+  const commentsList = comments.map(comment => 
+    <li>{comment.addedBy} said, {comment.body}</li>  
+  );
+
+  return (
+    <ul>
+      {commentsList}
+    </ul>
+  )
+}
+
 function LikesCounter(props) {
   const [likes, setLikes] = useState(props.likes.count);
 
   const [userLiked, setUserLiked] = useState(props.likes.userLiked);
 
-  function changeLikesCount() {
+  function changeLikesCount(e) {
+    e.preventDefault();
+    
     if (userLiked) {
       let newCount = likes - 1;
 
@@ -45,6 +61,8 @@ function PostsList(props) {
     <div className="post">
       <h3 className="mb-0">{post.title}</h3>
       <LikesCounter likes={post.likes} />
+      <hr />
+      <Comments comments={post.comments} />
     </div>
   );
 
