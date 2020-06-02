@@ -2,16 +2,35 @@ import React, { useState } from 'react';
 import './App.css';
 
 function Comments(props) {
+  const [newComment, setNewComment] = useState('');
+
+  // const [allComments, setAllComments] = 
+
   const comments = props.comments;
 
   const commentsList = comments.map(comment => 
     <li>{comment.addedBy} said, {comment.body}</li>  
   );
 
+  function saveComment() {
+    comments.push({
+      "body": newComment,
+      "addedBy": "You"
+    })
+
+    setNewComment('');
+  }
+
   return (
-    <ul>
-      {commentsList}
-    </ul>
+    <div>
+      <ul>
+        {commentsList}
+      </ul>
+      <div style={{ marginBottom: '1.5rem' }}>
+        <input type="text" placeholder="Say Something Here" value={newComment} onChange={e => setNewComment(e.target.value)} style={{ width: "100%" }} />
+        <button onClick={saveComment}>Add Comment</button>
+      </div>
+    </div>
   )
 }
 
